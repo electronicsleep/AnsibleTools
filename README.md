@@ -1,8 +1,11 @@
 # Ansible Examples
 
 #MacOS
+
 brew install ansible
+
 #Debian
+
 apt-get install ansible
 
 sudo vim /etc/ansible/hosts
