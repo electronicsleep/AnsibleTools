@@ -1,0 +1,31 @@
+# Get DATE
+- name: create date variable
+  shell: date +%Y%m%d-%H%M
+  register: date_contents
+
+- debug: var=date_contents.stdout_lines
+
+# Get OS
+- name: get os version
+  shell: cat /etc/issue.net
+  register: issue_contents
+
+- debug: var=issue_contents.stdout_lines
+
+# Get Kernel
+- name: get kernel version
+  shell: uname -a | cut -f 3 -d " "
+  register: uname_contents
+
+- debug: var=uname_contents.stdout_lines
+
+# Check Fail2ban running
+- name: fail2ban
+  shell: ps -ef | grep fail2ban | grep -v grep
+  ignore_errors: yes
+  register: fail2ban_contents
+
+- debug: var=fail2ban_contents.stdout
+
+- shell: sudo service fail2ban restart
+  when: fail2ban_contents.stdout == ""

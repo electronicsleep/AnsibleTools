@@ -1,0 +1,32 @@
+# Get Date
+- name: issue.net for os
+  shell: date +%Y%m%d-%H%M
+  register: date_contents
+
+- debug: var=date_contents.stdout_lines
+
+# Copy Update Script
+- copy:
+    src: update.sh
+    dest: /tmp/update.sh
+
+# Get OS
+- name: issue.net for os
+  shell: cat /etc/issue.net
+  register: issue_contents
+
+- debug: var=issue_contents.stdout_lines
+
+# Get Kernel
+- name: uname -a for kernel
+  shell: uname -a | cut -f 3 -d " "
+  register: uname_contents
+
+- debug: var=uname_contents.stdout_lines
+
+# Run Update Script
+- name: run command to check for updates
+  shell: bash -x /tmp/update.sh
+  register: update_contents
+
+- debug: var=update_contents.stdout_lines

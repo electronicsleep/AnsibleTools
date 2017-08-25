@@ -1,0 +1,24 @@
+# Apache
+- debug:
+    msg: "Hostname: {{ inventory_hostname }}"
+
+- name: apache 
+  shell: ps -ef | grep apache2 | grep -v grep
+  ignore_errors: yes
+  register: apache_contents
+
+- debug: var=apache_contents.stdout_lines
+
+- shell: sudo service apache2 restart
+  when: apache_contents.stdout == ""
+
+# MySql
+- name: mysql
+  shell: ps -ef | grep mysql | grep -v grep
+  ignore_errors: yes
+  register: mysql_contents
+
+- debug: var=mysql_contents.stdout
+
+- shell: sudo service mysql restart
+  when: mysql_contents.stdout == ""
