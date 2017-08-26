@@ -27,3 +27,7 @@ ansible-playbook check-lamp.yml -u ubuntu
 ansible-playbook check-os.yml -u ubuntu
 
 ansible-playbook update-os.yml -u ubuntu
+
+# Resources
+
+https://www.ansible.com/
