@@ -30,4 +30,6 @@ ansible-playbook update-os.yml -u ubuntu
 
 # Resources
 
-https://www.ansible.com/
+https://www.ansible.com
+
+http://docs.ansible.com
