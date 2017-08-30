@@ -35,7 +35,8 @@
 - name: get Netstap
   shell: netstat -tap
   register: netstat_contents
-  sudo: True
+  become: true
+  become_user: root
 
 - debug: var=netstat_contents.stdout_lines
 
@@ -48,4 +49,6 @@
 - debug: var=fail2ban_contents.stdout
 
 - shell: sudo service fail2ban restart
+  become: true
+  become_user: root
   when: fail2ban_contents.stdout == ""
