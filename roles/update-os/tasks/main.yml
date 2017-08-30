@@ -41,7 +41,7 @@
   shell: cat /tmp/apt-update.log
   register: apt_updates_check
 
-- debug: var=apt_updates_check.stdout_lines
+#- debug: var=apt_updates_check.stdout_lines
 
 # Copy Apt update log to local
 #- fetch:
