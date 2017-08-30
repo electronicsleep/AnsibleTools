@@ -26,7 +26,7 @@
 
 # Get Top
 - name: get Top
-  shell: top -bn1
+  shell: top -bn1 -o %CPU | head -n 30
   register: top_contents
 
 - debug: var=top_contents.stdout_lines
