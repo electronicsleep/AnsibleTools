@@ -1,9 +1,10 @@
+#!/bin/bash
+
 # Author: https://github.com/electronicsleep
 # Date: 07/20/2017
 # Purpose: Ansible - Check Apt updates and log details to a file
 # Released under the BSD license
 
-#!/bin/bash
 DATE=$(date +%Y%m%d-%H%M)
 echo "DATE: $DATE" | tee /tmp/apt-update.log
 # Run Updates and save to file

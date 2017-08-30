@@ -50,7 +50,9 @@
 
 # Run Updates if found pending
 - name: run updates
-  shell: sudo apt-get upgrade -y
+  shell: apt-get upgrade -y
+  become: true
+  become_user: root
   register: update_contents
   when: apt_updates_check.stdout.find("UPDATES PENDING") != -1
 
