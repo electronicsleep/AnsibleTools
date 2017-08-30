@@ -3,5 +3,6 @@
 # UPDATE LINUX OS VERSION
 #############################################
 - hosts: default
+  serial: 1
   roles:
     - update-os

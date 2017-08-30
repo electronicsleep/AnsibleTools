@@ -1,3 +1,8 @@
+# Author: https://github.com/electronicsleep
+# Date: 07/20/2017
+# Purpose: Ansible - Get detailed info about host
+# Released under the BSD license
+
 # Get DATE
 - name: create date variable
   shell: date +%Y%m%d-%H%M
@@ -18,6 +23,21 @@
   register: uname_contents
 
 - debug: var=uname_contents.stdout_lines
+
+# Get Top
+- name: get Top
+  shell: top -bn1
+  register: top_contents
+
+- debug: var=top_contents.stdout_lines
+
+# Get Netstat
+- name: get Netstap
+  shell: netstat -tap
+  register: netstat_contents
+  sudo: True
+
+- debug: var=netstat_contents.stdout_lines
 
 # Check Fail2ban running
 - name: fail2ban

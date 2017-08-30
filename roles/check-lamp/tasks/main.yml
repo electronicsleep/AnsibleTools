@@ -1,3 +1,8 @@
+# Author: https://github.com/electronicsleep
+# Date: 07/20/2017
+# Purpose: Ansible - Check Apache and MySQL and start if not runnning
+# Released under the BSD license
+
 # Apache
 - debug:
     msg: "Hostname: {{ inventory_hostname }}"

@@ -1,3 +1,8 @@
+# Author: https://github.com/electronicsleep
+# Date: 07/20/2017
+# Purpose: Ansible - Check Apt updates and log details to a file
+# Released under the BSD license
+
 # Get Date
 - name: issue.net for os
   shell: date +%Y%m%d-%H%M
@@ -30,3 +35,23 @@
   register: update_contents
 
 - debug: var=update_contents.stdout_lines
+
+# Run Update Check and Log details
+- name: check updates info
+  shell: cat /tmp/apt-update.log
+  register: apt_updates_check
+
+- debug: var=apt_updates_check.stdout_lines
+
+# Copy Apt update log to local
+#- fetch:
+#    dest: .
+#    src: /tmp/apt-update.log
+
+# Run Updates if found pending
+- name: run updates
+  shell: sudo apt-get upgrade -y
+  register: update_contents
+  when: apt_updates_check.stdout.find("UPDATES PENDING") != -1
+
+#- debug: var=update_contents.stdout_lines
