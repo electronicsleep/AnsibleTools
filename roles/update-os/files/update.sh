@@ -12,7 +12,7 @@ sudo apt-get update ; sudo apt-get upgrade --dry-run | tee -a /tmp/apt-update.lo
 if grep "0 upgraded, 0 newly installed, 0 to remove" /tmp/apt-update.log; then
 	echo "### NO UPDATES ###" | tee -a  /tmp/apt-update.log
 else
+  # Create update log by timestamp if updates
 	echo "### UPDATES PENDING ###" | tee -a /tmp/apt-update.log
+  cat /tmp/apt-update.log > /tmp/apt-update-$DATE.log
 fi
-# Create update log by timestamp
-cat /tmp/apt-update.log > /tmp/apt-update-$DATE.log
