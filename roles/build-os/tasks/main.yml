@@ -1,0 +1,12 @@
+# Author: https://github.com/electronicsleep
+# Date: 07/20/2017
+# Purpose: Ansible - Install all base packages
+# Released under the BSD license
+
+# Install
+
+- name: Install OS packages
+  shell: sudo apt-get update ; sudo apt-get upgrade -y ; sudo apt-get install fail2ban htop npm tree -y
+  register: apt_contents
+
+- debug: var=apt_contents.stdout_lines

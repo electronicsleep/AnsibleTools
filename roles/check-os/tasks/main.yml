@@ -3,36 +3,43 @@
 # Purpose: Ansible - Get detailed info about host
 # Released under the BSD license
 
-# Get DATE
-- name: create date variable
+# Get date
+- name: Create date variable
   shell: date +%Y%m%d-%H%M
   register: date_contents
 
 - debug: var=date_contents.stdout_lines
 
 # Get OS
-- name: get os version
+- name: Get os version
   shell: cat /etc/issue.net
   register: issue_contents
 
 - debug: var=issue_contents.stdout_lines
 
 # Get Kernel
-- name: get kernel version
+- name: Get kernel version
   shell: uname -a | cut -f 3 -d " "
   register: uname_contents
 
 - debug: var=uname_contents.stdout_lines
 
 # Get Top
-- name: get Top
+- name: Get top
   shell: top -bn1 -o %CPU | head -n 30
   register: top_contents
 
 - debug: var=top_contents.stdout_lines
 
+# Get Users
+- name: Get users
+  shell: w
+  register: w_contents
+
+- debug: var=w_contents.stdout_lines
+
 # Get Netstat
-- name: get Netstap
+- name: Get netstat
   shell: netstat -tap
   register: netstat_contents
   become: true
@@ -41,7 +48,7 @@
 - debug: var=netstat_contents.stdout_lines
 
 # Check Fail2ban running
-- name: fail2ban
+- name: Get fail2ban
   shell: ps -ef | grep fail2ban | grep -v grep
   ignore_errors: yes
   register: fail2ban_contents
