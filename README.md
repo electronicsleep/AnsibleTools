@@ -28,6 +28,8 @@ ansible-playbook check-os.yml -u ubuntu
 
 ansible-playbook update-os.yml -u ubuntu
 
+ansible-playbook build-nagios-client.yml -u ubuntu
+
 # Resources
 
 https://www.ansible.com

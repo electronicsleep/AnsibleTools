@@ -1,0 +1,69 @@
+# Author: https://github.com/electronicsleep
+# Date: 07/20/2017
+# Purpose: Ansible - Build Nagios Client
+# Released under the BSD license
+
+# Create monitor user
+- user:
+    name: monitor
+    comment: "monitor"
+    shell: /bin/bash
+  become: true
+  become_user: root
+
+# Copy Run Script
+- copy:
+    src: check_disk
+    dest: /home/monitor/
+    mode: 0775
+  become: true
+  become_user: monitor
+
+# Copy Run Script
+- copy:
+    src: check_load
+    dest: /home/monitor/
+    mode: 0775
+  become: true
+  become_user: monitor
+
+ # Copy Run Script
+- copy:
+    src: check_memory
+    dest: /home/monitor/
+    mode: 0775
+  become: true
+  become_user: monitor
+
+ # Copy Run Script
+- copy:
+    src: check_procs
+    dest: /home/monitor/
+    mode: 0775
+  become: true
+  become_user: monitor
+
+ # Copy Run Script
+- copy:
+    src: check_swap
+    dest: /home/monitor/
+    mode: 0775
+  become: true
+  become_user: monitor
+
+ # Copy Run Script
+- copy:
+    src: check_users
+    dest: /home/monitor/
+    mode: 0775
+  become: true
+  become_user: monitor
+
+# Install ssh key
+- name: Set authorized key took from file
+  authorized_key:
+    user: monitor
+    state: present
+    key: "{{ lookup('file', 'id_rsa.pub') }}"
+  become: true
+  become_user: monitor
