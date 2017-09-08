@@ -18,6 +18,7 @@ if [ -z $PEM ];then
  exit 1
 else
  echo "HOST: $HOST"
+ # Copy public SSH key
  cat ~/.ssh/id_rsa.pub | ssh -i $PEM ubuntu@$HOST "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
  # Ensure Python installed for Ansible
  ssh ubuntu@$HOST 'sudo apt-get install python3 -y'
