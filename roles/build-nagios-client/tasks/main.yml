@@ -60,7 +60,7 @@
   become_user: monitor
 
 # Install ssh key
-- name: Set authorized key took from file
+- name: Set authorized key from file
   authorized_key:
     user: monitor
     state: present
