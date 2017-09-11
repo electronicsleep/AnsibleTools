@@ -6,7 +6,7 @@
 # Install
 
 - name: Install OS packages
-  shell: sudo apt-get update ; sudo apt-get upgrade -y ; sudo apt-get install fail2ban htop tree -y
+  shell: sudo apt-get update ; sudo apt-get upgrade -y ; sudo apt-get install python python3 fail2ban htop tree screen -y
   register: apt_contents
 
 - debug: var=apt_contents.stdout_lines
