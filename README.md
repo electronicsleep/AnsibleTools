@@ -20,7 +20,11 @@ ansible default -a "ps -ef" -u ubuntu
 
 ansible default -m setup -u ubuntu
 
-# Run Playbooks
+# Simple Playbooks (one file)
+
+ansible-playbook check-user-load.yml -u ubuntu
+
+# Run Role Playbooks (roles directory)
 
 ansible-playbook check-lamp.yml -u ubuntu
 

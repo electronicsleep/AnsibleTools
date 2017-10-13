@@ -1,0 +1,12 @@
+---
+#############################################
+# CHECK Users/Load
+#############################################
+- hosts: default
+  # Get Users
+  tasks:
+  - name: Get users
+    shell: w
+    register: w_contents
+
+  - debug: var=w_contents.stdout_lines
