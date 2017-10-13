@@ -2,6 +2,6 @@
 #############################################
 # CHECK LAMP
 #############################################
-- hosts: default
+- hosts: lamp-servers
   roles:
     - check-lamp
