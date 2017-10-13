@@ -41,15 +41,15 @@
 
 # Copy update log to local
 - fetch:
-    dest: log
+    dest: log-{{ ansible_date_time.date }}
     src: /tmp/apt-update-{{ ansible_date_time.date }}.log
 
 # Run Updates if found pending
-#- name: run updates
-#  shell: apt-get upgrade -y
-#  become: true
-#  become_user: root
-#  register: update_contents
-#  when: apt_updates_check.stdout.find("UPDATES PENDING") != -1
-#
-#- debug: var=update_contents.stdout_lines
+- name: run updates
+  shell: apt-get upgrade -y
+  become: true
+  become_user: root
+  register: update_contents
+  when: apt_updates_check.stdout.find("UPDATES PENDING") != -1
+
+- debug: var=update_contents.stdout_lines

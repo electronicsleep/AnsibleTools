@@ -16,6 +16,8 @@ ansible default -a "w" -u ubuntu
 
 ansible default -a "ps -ef" -u ubuntu
 
+ansible default -a "netstat -ta" -u ubuntu
+
 # Get Facts
 
 ansible default -m setup -u ubuntu
@@ -31,6 +33,8 @@ ansible-playbook check-lamp.yml -u ubuntu
 ansible-playbook check-os.yml -u ubuntu
 
 ansible-playbook update-os.yml -u ubuntu
+
+ansible-playbook build-os.yml -u ubuntu
 
 ansible-playbook build-nagios-client.yml -u ubuntu
 
