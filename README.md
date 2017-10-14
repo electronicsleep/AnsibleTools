@@ -1,12 +1,14 @@
 # Ansible Examples
 
-#MacOS
+#### MacOS
 
-brew install ansible
+- brew install ansible
 
-#Debian
+#### Debian
 
-apt-get install ansible
+- apt-get install ansible
+
+## Host inventory file
 
 sudo vim /etc/ansible/hosts
 
@@ -30,7 +32,7 @@ Use --list-hosts
 
 ansible default -m setup -u ubuntu
 
-## Simple Playbooks (one file)
+## Simple Playbooks (single file)
 
 ansible-playbook check-user-load.yml -u ubuntu
 
