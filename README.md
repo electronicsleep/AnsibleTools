@@ -18,15 +18,23 @@ ansible default -a "ps -ef" -u ubuntu
 
 ansible default -a "netstat -ta" -u ubuntu
 
-# Get Facts
+## Best Practices
+
+Use --check
+
+Use --syntax-check
+
+Use --list-hosts
+
+## Get Facts
 
 ansible default -m setup -u ubuntu
 
-# Simple Playbooks (one file)
+## Simple Playbooks (one file)
 
 ansible-playbook check-user-load.yml -u ubuntu
 
-# Run Role Playbooks (roles directory)
+## Run Role Playbooks (roles directory)
 
 ansible-playbook check-lamp.yml -u ubuntu
 
@@ -34,11 +42,11 @@ ansible-playbook check-os.yml -u ubuntu
 
 ansible-playbook update-os.yml -u ubuntu
 
-ansible-playbook build-os.yml -u ubuntu
+ansible-playbook build-base-os.yml -u ubuntu
 
 ansible-playbook build-nagios-client.yml -u ubuntu
 
-# Resources
+## Resources
 
 https://www.ansible.com
 
