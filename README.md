@@ -1,5 +1,7 @@
 # Ansible Examples
 
+-Bootstrap examples for Ansible infrastructure automation that I am working on for training others in the Ansible tool, shows some of the simple concepts. Also includes some Python Boto3 examples as well.
+
 #### MacOS
 
 - brew install ansible
