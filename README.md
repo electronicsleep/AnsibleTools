@@ -1,6 +1,6 @@
 # Ansible Examples
 
--Bootstrap examples for Ansible infrastructure automation that I am working on for training others in the Ansible tool, shows some of the simple concepts. Also includes some Python Boto3 examples as well.
+- Bootstrap examples for Ansible infrastructure automation for training others in Ansible. Repo shows some of the simple conceptsand also includes some Python Boto3 examples as well.
 
 #### MacOS
 
