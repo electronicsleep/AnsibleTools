@@ -17,6 +17,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--playbook", help="playbook to run", required=False)
     parser.add_argument("-u", "--user", help="user for host", required=False)
+    parser.add_argument("-v", "--verbose", help="numeric verbose", required=False)
     args = parser.parse_args()
 
     if args.playbook is None:
@@ -29,11 +30,18 @@ def main():
     else:
         user = args.user
 
-    print("playbook: ", playbook)
-    print("user: ", user)
+    if args.verbose is None:
+        verbose = 0
+    else:
+        verbose = args.verbose
 
+    if verbose > 0:
+        print("playbook: ", playbook)
+        print("user: ", user)
+
+    log_file = "report-" + date + ".log"
     hosts_file = open("/etc/ansible/hosts", "r")
-    report = open("report-" + date + ".log", 'w')
+    report = open(log_file, 'w')
 
     disk_space_check = []
     for size in range(80, 100):
@@ -44,11 +52,12 @@ def main():
     for host_line in hosts_file:
         if "[" in host_line:
             group = host_line
-            print("Group: ", group)
+            if verbose > 0:
+                print("Group: ", group)
         elif host_line != "":
             host_num += 1
+            print("### Host Num:", host_num)
             print("Host Details:", host_line.strip())
-            print("Host Num:", host_num)
             host = host_line.split(" ")[0]
             print("Address:", host)
             host_one = open("ansible_host", 'w')
@@ -59,10 +68,12 @@ def main():
             output = subprocess.check_output(['ansible-playbook', playbook, '-i', "ansible_host", "-u", user])
             report.write("Host Details: " + host_line)
             for line in output.decode("utf-8").split("\n"):
-                print(line.strip())
+                if verbose > 0:
+                    print(line.strip())
                 for disk_space in disk_space_check:
                     if disk_space in line:
-                        print("Found: ", disk_space)
+                        if verbose > 0:
+                            print("Found: ", disk_space)
                         found_host_issue.append(host_line)
 
                 report.write(line + "\n")
@@ -72,6 +83,7 @@ def main():
     for host in found_host_issue:
         print("Issue: " + host)
 
+    print("Wrote Log: " + log_file)
     report.close()
 
 
