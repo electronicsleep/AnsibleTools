@@ -8,6 +8,7 @@
 import subprocess
 import argparse
 import datetime
+from termcolor import colored
 
 date = datetime.datetime.now().strftime("%Y%m%d-%H%M")
 print("report date: " + date)
@@ -33,9 +34,10 @@ def main():
     if args.verbose is None:
         verbose = 0
     else:
-        verbose = args.verbose
+        verbose = int(args.verbose)
 
     if verbose > 0:
+        print("verbose: ", verbose)
         print("playbook: ", playbook)
         print("user: ", user)
 
@@ -79,13 +81,19 @@ def main():
                 report.write(line + "\n")
 
     if len(found_host_issue) == 0:
-        print("No issues found")
+        print_warn("No issues found")
     for host in found_host_issue:
-        print("Issue: " + host)
-
+        print_error("Issue: " + host)
     print("Wrote Log: " + log_file)
     report.close()
 
+
+def print_error(message):
+    print(colored(message, 'red'))
+
+
+def print_warn(message):
+    print(colored(message, 'yellow'))
 
 if __name__ == '__main__':
     main()
