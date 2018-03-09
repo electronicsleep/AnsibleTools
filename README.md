@@ -10,13 +10,11 @@ Examples use python3 but older versions should be supported
 
 #### MacOS Install
 
-brew install ansible
-brew install python3
+brew install ansible python3
 
 #### Debian Install
 
-apt-get install ansible
-apt-get install python3
+apt-get install ansible python3 python3-pip
 
 #### Generate Inventory
 
