@@ -11,10 +11,12 @@ Examples use python3 but older versions should be supported
 #### MacOS Install
 
 brew install ansible
+brew install python3
 
 #### Debian Install
 
 apt-get install ansible
+apt-get install python3
 
 #### Generate Inventory
 
@@ -29,6 +31,8 @@ sudo vim /etc/ansible/hosts
 Example using Ansible and Python together
 
 python ansiblePython.py
+
+python ansiblePython.py -p check-top.yml
 
 #### Ansible Commands
 
