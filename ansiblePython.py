@@ -41,7 +41,7 @@ def main():
         print("playbook: ", playbook)
         print("user: ", user)
 
-    log_file = "report-" + date + ".log"
+    log_file = "reports/report-" + date + ".log"
     hosts_file = open("/etc/ansible/hosts", "r")
     report = open(log_file, 'w')
 

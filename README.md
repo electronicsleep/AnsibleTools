@@ -6,6 +6,8 @@ Repo shows some of the simple concepts and also includes some Python Boto3 examp
 
 Normally I use Ansible and Python together to get more power and control with parsing and flow.
 
+Examples use python3 but older versions should be supported
+
 #### MacOS Install
 
 brew install ansible
@@ -14,18 +16,19 @@ brew install ansible
 
 apt-get install ansible
 
-
-
 #### Generate Inventory
+
+pip install -r requirements.txt
+
 python boto/get_inventory.py
 
 sudo vim /etc/ansible/hosts
 
 #### Host inventory file
 
-Example file for using Ansible and Python together
+Example using Ansible and Python together
 
-File: ansiblePython.py 
+python ansiblePython.py
 
 #### Ansible Commands
 
