@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-
 # Author: https://github.com/electronicsleep
-# Date: 02/22/2018
 # Purpose: Using Ansible and Python for more control
 # Released under the BSD license
 
