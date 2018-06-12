@@ -46,7 +46,7 @@
 
 # Run Updates if found pending
 - name: run updates
-  shell: apt-get upgrade -y
+  shell: yes | apt-get upgrade -y
   become: true
   become_user: root
   register: update_contents
