@@ -1,12 +1,12 @@
 # Ansible Examples
 
-Bootstrap examples for Ansible infrastructure DevOps automation for training. 
+Bootstrap examples for Ansible infrastructure DevOps automation.
 
 https://www.yourideaspace.com/contact
 
 Repo shows some of the simple concepts and also includes some Python Boto3 examples.
 
-Normally I use Ansible and Python together to get more power and control with parsing and flow.
+In some cases I use Ansible and Python together to get more power and control with parsing and flow.
 
 Examples use Python3 but older versions should be supported
 
