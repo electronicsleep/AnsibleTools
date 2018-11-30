@@ -1,6 +1,6 @@
-# Ansible Examples
+# Ansible Tools
 
-Bootstrap examples for Ansible infrastructure DevOps automation.
+Bootstrap tools/examples for Ansible infrastructure DevOps automation.
 
 If you are interested in me doing an infrastructure/devops talk or questions contact me below.
 
