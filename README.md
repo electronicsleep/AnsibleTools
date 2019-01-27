@@ -2,9 +2,9 @@
 
 Bootstrap tools/examples for Ansible infrastructure DevOps automation.
 
-Repo shows some of the simple concepts and also includes some Python Boto3 examples.
+Shows some of the simple concepts and also includes some Python Boto3 examples.
 
-Ansible and Python can be used together to get more power and control .
+Ansible and Python can be used together to get more power and control.
 
 Examples use Python3 but older versions should be supported.
 
