@@ -1,0 +1,12 @@
+---
+#############################################
+# Check Disk
+#############################################
+- hosts: default
+  gather_facts: False
+  tasks:
+    - name: Check Disk
+      command: w
+      register: check_w
+    - debug: var=check_w.stdout_lines
+

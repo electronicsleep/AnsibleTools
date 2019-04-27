@@ -10,17 +10,21 @@ from termcolor import colored
 
 date = datetime.datetime.now().strftime("%Y%m%d-%H%M")
 print("report date: " + date)
+ssh_private_key = "--private-key=default.pem"
+check_disk_name = "/dev/xvda1"
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--playbook", help="playbook to run", required=False)
     parser.add_argument("-u", "--user", help="user for host", required=False)
-    parser.add_argument("-v", "--verbose", help="numeric verbose", required=False)
+    parser.add_argument("-v", "--verbose", help="numeric verbose", required=False, action="store_true")
     args = parser.parse_args()
 
+    verbose = args.verbose
+
     if args.playbook is None:
-        playbook = "check-disk.yml"
+        playbook = "check-w.yml"
     else:
         playbook = args.playbook
 
@@ -29,22 +33,17 @@ def main():
     else:
         user = args.user
 
-    if args.verbose is None:
-        verbose = 0
-    else:
-        verbose = int(args.verbose)
-
-    if verbose > 0:
+    if verbose:
         print("verbose: ", verbose)
         print("playbook: ", playbook)
         print("user: ", user)
 
     log_file = "reports/report-" + date + ".log"
-    hosts_file = open("/etc/ansible/hosts", "r")
+    hosts_file = open("hosts.txt", "r")
     report = open(log_file, 'w')
 
     disk_space_check = []
-    for size in range(80, 100):
+    for size in range(80, 101):
         disk_space_check.append(str(size) + "%")
 
     found_host_issue = []
@@ -52,7 +51,7 @@ def main():
     for host_line in hosts_file:
         if "[" in host_line:
             group = host_line
-            if verbose > 0:
+            if verbose:
                 print("Group: ", group)
         elif host_line != "":
             host_num += 1
@@ -60,19 +59,29 @@ def main():
             print("Host Details:", host_line.strip())
             host = host_line.split(" ")[0]
             print("Address:", host)
-            host_one = open("ansible_host", 'w')
+            host_one = open("ansible_host.txt", 'w')
             host_one.write("[default]\n")
             host_one.write(host + "\n")
             host_one.close()
 
-            output = subprocess.check_output(['ansible-playbook', playbook, '-i', "ansible_host", "-u", user])
+            try:
+                print("CMD: ansible-playbook", playbook, "-i", "ansible_host.txt", "-u", user, ssh_private_key)
+                if ssh_private_key != "":
+                    output = subprocess.check_output(['ansible-playbook', playbook, '-i', "ansible_host.txt", "-u", user, ssh_private_key])
+                else:
+                    output = subprocess.check_output(['ansible-playbook', playbook, '-i', "ansible_host.txt", "-u", user])
+            except Exception as e:
+                print("error running command", e)
+                exit(1)
             report.write("Host Details: " + host_line)
             for line in output.decode("utf-8").split("\n"):
-                if verbose > 0:
+                if verbose:
                     print(line.strip())
+
+                # Check disk space over threshold
                 for disk_space in disk_space_check:
-                    if disk_space in line:
-                        if verbose > 0:
+                    if disk_space in line and check_disk_name in line:
+                        if verbose:
                             print("Found: ", disk_space)
                         found_host_issue.append(host_line)
 
