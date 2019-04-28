@@ -10,8 +10,8 @@ from termcolor import colored
 
 date = datetime.datetime.now().strftime("%Y%m%d-%H%M")
 print("report date: " + date)
-ssh_private_key = "--private-key=default.pem"
 check_disk_name = "/dev/xvda1"
+check_load_avg = "load average:"
 
 
 def main():
@@ -43,7 +43,7 @@ def main():
     report = open(log_file, 'w')
 
     disk_space_check = []
-    for size in range(80, 101):
+    for size in range(70, 101):
         disk_space_check.append(str(size) + "%")
 
     found_host_issue = []
@@ -53,51 +53,61 @@ def main():
             group = host_line
             if verbose:
                 print("Group: ", group)
-        elif host_line != "":
+        elif host_line != "" and not host_line.lower().startswith("#"):
             host_num += 1
-            print("### Host Num:", host_num)
-            print("Host Details:", host_line.strip())
+            print("#" * 80)
+            print_warn("Host Details: " + host_line.strip() + " Host: " + str(host_num))
             host = host_line.split(" ")[0]
-            print("Address:", host)
+            print_warn("IPAddress: " + host)
+            print("#" * 80)
             host_one = open("ansible_host.txt", 'w')
             host_one.write("[default]\n")
             host_one.write(host + "\n")
             host_one.close()
 
             try:
-                print("CMD: ansible-playbook", playbook, "-i", "ansible_host.txt", "-u", user, ssh_private_key)
-                if ssh_private_key != "":
-                    output = subprocess.check_output(['ansible-playbook', playbook, '-i', "ansible_host.txt", "-u", user, ssh_private_key])
-                else:
-                    output = subprocess.check_output(['ansible-playbook', playbook, '-i', "ansible_host.txt", "-u", user])
-            except Exception as e:
-                print("error running command", e)
+                output = subprocess.check_output(['ansible-playbook', playbook, '-i', "ansible_host.txt", "-u", user])
+            except subprocess.CalledProcessError as e:
+                print("Error:", e)
                 exit(1)
             report.write("Host Details: " + host_line)
             for line in output.decode("utf-8").split("\n"):
                 if verbose:
                     print(line.strip())
 
-                # Check disk space over threshold
-                for disk_space in disk_space_check:
-                    if disk_space in line and check_disk_name in line:
-                        if verbose:
-                            print("Found: ", disk_space)
-                        found_host_issue.append(host_line)
+                if playbook == "check-w.yml":
+                    # Check load over threshold
+                    if check_load_avg in line:
+                       check_load_line = line.split()
+                       check_load_avg_line = check_load_line[-3:]
+                       print("check_load_avg_line", check_load_avg_line)
+                       load_avg_1m = check_load_avg_line[0].split(".")
+                       load_avg_1m = int(load_avg_1m[0])
+                       if load_avg_1m > 0:
+                            print_error("Found load over 0: " + check_load_avg)
+                            found_host_issue.append(host_line + " -  " + line)
+
+                if playbook == "check-disk.yml":
+                    # Check disk space over threshold
+                    for disk_space in disk_space_check:
+                        if disk_space in line and check_disk_name in line:
+                            print_error("Found disk over threshold: " + disk_space)
+                            found_host_issue.append(host_line + " -  " + line)
 
                 report.write(line + "\n")
 
     if len(found_host_issue) == 0:
         print_warn("No issues found")
     for host in found_host_issue:
+        print("Playbook: " + playbook)
         print_error("Issue: " + host)
+        print_error(line)
     print("Wrote Log: " + log_file)
     report.close()
 
 
 def print_error(message):
     print(colored(message, 'red'))
-
 
 def print_warn(message):
     print(colored(message, 'yellow'))

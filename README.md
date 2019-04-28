@@ -1,7 +1,6 @@
 # Ansible Tools
 
 Bootstrap tools/examples for Ansible infrastructure DevOps automation.
-
 Shows some of the simple concepts and also includes some Python Boto3 examples.
 
 Ansible and Python can be used together to get more power and control.
@@ -20,17 +19,19 @@ apt-get install ansible python3 python3-pip
 
 pip install -r requirements.txt
 
-python boto/get_inventory.py
+python boto/get_inventory.py > hosts.txt
 
-sudo vim /etc/ansible/hosts
+Update any key files in ~/.ansible.conf see example
 
 #### Host inventory file
 
 Example using Ansible and Python together
 
-python ansiblePython.py
+python ansiblePython.py -p check-w.yml -v
 
-python ansiblePython.py -p check-top.yml
+python ansiblePython.py -p check-top.yml -v
+
+python ansiblePython.py -p check-disk.yml -v
 
 #### Ansible Commands
 
