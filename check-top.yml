@@ -1,0 +1,12 @@
+---
+#############################################
+# Check top
+#############################################
+- hosts: default
+  gather_facts: False
+  tasks:
+    - name: Check top
+      command: top -bn1
+      register: check_top
+    - debug: var=check_top.stdout_lines
+
