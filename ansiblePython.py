@@ -12,13 +12,15 @@ date = datetime.datetime.now().strftime("%Y%m%d-%H%M")
 print("report date: " + date)
 check_disk_name = "/dev/xvda1"
 check_load_avg = "load average:"
+root_dir = ""
+print("root_dir: " + root_dir)
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--playbook", help="playbook to run", required=False)
     parser.add_argument("-u", "--user", help="user for host", required=False)
-    parser.add_argument("-v", "--verbose", help="numeric verbose", required=False, action="store_true")
+    parser.add_argument("-v", "--verbose", help="show more output", required=False, action="store_true")
     args = parser.parse_args()
 
     verbose = args.verbose
@@ -38,12 +40,12 @@ def main():
         print("playbook: ", playbook)
         print("user: ", user)
 
-    log_file = "reports/report-" + date + ".log"
-    hosts_file = open("hosts.txt", "r")
+    log_file = root_dir + "reports/report-" + date + ".log"
+    hosts_file = open(root_dir + "hosts.txt", "r")
     report = open(log_file, 'w')
 
     disk_space_check = []
-    for size in range(70, 101):
+    for size in range(50, 101):
         disk_space_check.append(str(size) + "%")
 
     found_host_issue = []
@@ -60,13 +62,13 @@ def main():
             host = host_line.split(" ")[0]
             print_warn("IPAddress: " + host)
             print("#" * 80)
-            host_one = open("ansible_host.txt", 'w')
+            host_one = open(root_dir + "ansible_host.txt", 'w')
             host_one.write("[default]\n")
             host_one.write(host + "\n")
             host_one.close()
 
             try:
-                output = subprocess.check_output(['ansible-playbook', playbook, '-i', "ansible_host.txt", "-u", user])
+                output = subprocess.check_output(['ansible-playbook', root_dir + playbook, '-i', root_dir + "ansible_host.txt", "-u", user])
             except subprocess.CalledProcessError as e:
                 print("Error:", e)
                 exit(1)
@@ -75,14 +77,14 @@ def main():
                 if verbose:
                     print(line.strip())
 
-                if playbook == "check-w.yml":
+                if playbook == "check-w.yml" or playbook == "check-top.yml":
                     # Check load over threshold
                     if check_load_avg in line:
                        check_load_line = line.split()
                        check_load_avg_line = check_load_line[-3:]
-                       print("check_load_avg_line", check_load_avg_line)
                        load_avg_1m = check_load_avg_line[0].split(".")
                        load_avg_1m = int(load_avg_1m[0])
+                       # print("LOAD:", load_avg_1m)
                        if load_avg_1m > 0:
                             print_error("Found load over 0: " + check_load_avg)
                             found_host_issue.append(host_line + " -  " + line)
