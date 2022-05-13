@@ -1,11 +1,11 @@
 ---
 #############################################
-# Check Disk
+# Check W
 #############################################
 - hosts: default
   gather_facts: False
   tasks:
-    - name: Check Disk
+    - name: Check W
       command: w
       register: check_w
     - debug: var=check_w.stdout_lines
