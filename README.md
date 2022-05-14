@@ -24,7 +24,7 @@ pip3 install -r requirements.txt
 python3 boto/get_inventory.py > hosts.txt
 ```
 
-Update key file: `~/.ansible.conf`
+Update ansible.conf file if needed: `~/.ansible.conf`
 
 Example:
 ```
@@ -38,7 +38,7 @@ nocows=1
 
 #### Host inventory file
 
-Example using Ansible and Python together
+Example using AnsiblePython:
 
 ```
 python3 ansiblePython.py -p check-w.yml -v
@@ -71,11 +71,11 @@ ansible-playbook -i hosts.txt check-user-load.yml -u ubuntu
 #### Run Role Playbooks (roles directory)
 
 ```
-ansible-playbook -i hosts.txt check-lamp.yml -u ubuntu
 ansible-playbook -i hosts.txt check-os.yml -u ubuntu
-ansible-playbook -i hosts.txt update-os.yml -u ubuntu
-ansible-playbook -i hosts.txt build-base-os.yml -u ubuntu
-ansible-playbook -i hosts.txt build-nagios-client.yml -u ubuntu
+ansible-playbook -i hosts.txt check-lamp.yml -u ubuntu
+# ansible-playbook -i hosts.txt update-os.yml -u ubuntu
+# ansible-playbook -i hosts.txt build-base-os.yml -u ubuntu
+# ansible-playbook -i hosts.txt build-nagios-client.yml -u ubuntu
 ```
 
 #### Best Practices
