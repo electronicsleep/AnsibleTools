@@ -13,7 +13,6 @@ print(f"report date: {date}")
 check_disk_name = "/dev/xvda1"
 check_load_avg = "load average:"
 root_dir = ""
-print("root_dir: {root_dir}")
 
 
 def main():
@@ -84,7 +83,7 @@ def main():
                        check_load_avg_line = check_load_line[-3:]
                        load_avg_1m = check_load_avg_line[0].split(".")
                        load_avg_1m = int(load_avg_1m[0])
-                       # print("LOAD:", load_avg_1m)
+                       print("LOAD:", load_avg_1m)
                        if load_avg_1m > 0:
                             print_error("Found load over 0: " + check_load_avg)
                             found_host_issue.append(host_line + " -  " + line)

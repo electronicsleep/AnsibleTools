@@ -1,2 +1,4 @@
-roles/build-nagios-client/files/id_rsa.pub
-log*
+src/roles/build-nagios-client/files/id_rsa.pub
+src/ansible_host.txt
+src/hosts.txt
+src/reports/*

@@ -11,7 +11,7 @@ Ansible and Python can be used together to get more power and control.
 brew install ansible python3
 ```
 
-#### Debian Install
+#### Ubuntu/Debian Install
 
 ```
 apt-get install ansible python3 python3-pip
@@ -21,6 +21,7 @@ apt-get install ansible python3 python3-pip
 
 ```
 pip3 install -r requirements.txt
+cd src
 python3 boto/get_inventory.py > hosts.txt
 ```
 
@@ -33,7 +34,6 @@ host_key_checking = False
 retry_files_enabled = False
 private_key_file = ~/.ssh/example.pem
 nocows=1
-
 ```
 
 #### Host inventory file
@@ -46,6 +46,16 @@ python3 ansiblePython.py -p check-top.yml -v
 python3 ansiblePython.py -p check-disk.yml -v
 ```
 
+#### Run Role Playbooks (roles directory)
+
+```
+ansible-playbook -i hosts.txt check-os.yml -u ubuntu
+ansible-playbook -i hosts.txt check-lamp.yml -u ubuntu
+# ansible-playbook -i hosts.txt update-os.yml -u ubuntu
+# ansible-playbook -i hosts.txt build-base-os.yml -u ubuntu
+# ansible-playbook -i hosts.txt build-nagios-client.yml -u ubuntu
+```
+
 #### Ansible Commands
 
 ```
@@ -55,27 +65,16 @@ ansible default -i hosts.txt -a "ps -ef" -u ubuntu
 ansible default -i hosts.txt -a "netstat -ta" -u ubuntu
 ```
 
-
-#### Get Facts
-
-```
-ansible default -m setup -u ubuntu
-```
-
 #### Simple Playbooks (single file)
 
 ```
 ansible-playbook -i hosts.txt check-user-load.yml -u ubuntu
 ```
 
-#### Run Role Playbooks (roles directory)
+#### Get Facts
 
 ```
-ansible-playbook -i hosts.txt check-os.yml -u ubuntu
-ansible-playbook -i hosts.txt check-lamp.yml -u ubuntu
-# ansible-playbook -i hosts.txt update-os.yml -u ubuntu
-# ansible-playbook -i hosts.txt build-base-os.yml -u ubuntu
-# ansible-playbook -i hosts.txt build-nagios-client.yml -u ubuntu
+ansible default -m setup -u ubuntu
 ```
 
 #### Best Practices
@@ -89,7 +88,6 @@ Use --list-hosts
 #### Troubleshooting
 
 Make sure Python is installed on target hosts
-
 
 #### Resources
 
