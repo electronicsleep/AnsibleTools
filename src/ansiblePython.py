@@ -9,11 +9,11 @@ import datetime
 from termcolor import colored
 
 date = datetime.datetime.now().strftime("%Y%m%d-%H%M")
-print("report date: " + date)
+print(f"report date: {date}")
 check_disk_name = "/dev/xvda1"
 check_load_avg = "load average:"
 root_dir = ""
-print("root_dir: " + root_dir)
+print("root_dir: {root_dir}")
 
 
 def main():
@@ -36,16 +36,16 @@ def main():
         user = args.user
 
     if verbose:
-        print("verbose: ", verbose)
-        print("playbook: ", playbook)
-        print("user: ", user)
+        print(f"verbose: {verbose}")
+        print(f"playbook: {playbook}")
+        print(f"user: {user}")
 
     log_file = root_dir + "reports/report-" + date + ".log"
     hosts_file = open(root_dir + "hosts.txt", "r")
     report = open(log_file, 'w')
 
     disk_space_check = []
-    for size in range(50, 101):
+    for size in range(95, 101):
         disk_space_check.append(str(size) + "%")
 
     found_host_issue = []
