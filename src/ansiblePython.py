@@ -39,7 +39,7 @@ def main():
         print(f"playbook: {playbook}")
         print(f"user: {user}")
 
-    log_file = root_dir + "reports/report-" + date + ".log"
+    log_file = root_dir + "src/reports/report-" + date + ".log"
     hosts_file = open(root_dir + "hosts.txt", "r")
     report = open(log_file, 'w')
 
@@ -66,8 +66,9 @@ def main():
             host_one.write(host + "\n")
             host_one.close()
 
+            print("PLAYBOOK: " + root_dir + "src/" + playbook)
             try:
-                output = subprocess.check_output(['ansible-playbook', root_dir + playbook, '-i', root_dir + "ansible_host.txt", "-u", user])
+                output = subprocess.check_output(['ansible-playbook', root_dir + "src/" + playbook, '-i', root_dir + "ansible_host.txt", "-u", user])
             except subprocess.CalledProcessError as e:
                 print("Error:", e)
                 exit(1)

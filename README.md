@@ -20,12 +20,14 @@ apt-get install ansible python3 python3-pip
 #### Generate Inventory
 
 ```
+brew install virtualenv
+virtualenv tempEnv
+source tempEnv/bin/activate
 pip3 install -r requirements.txt
-cd src
-python3 boto/get_inventory.py > hosts.txt
+python3 src/boto/get_inventory.py > hosts.txt
 ```
 
-Update ansible.conf file if needed: `~/.ansible.conf`
+Update ansible.conf file if needed: `~/.ansible.cfg`
 
 Example:
 ```
@@ -41,9 +43,9 @@ nocows=1
 Example using AnsiblePython:
 
 ```
-python3 ansiblePython.py -p check-w.yml -v
-python3 ansiblePython.py -p check-top.yml -v
-python3 ansiblePython.py -p check-disk.yml -v
+python3 src/ansiblePython.py -p check-w.yml -v
+python3 src/ansiblePython.py -p check-top.yml -v
+python3 src/ansiblePython.py -p check-disk.yml -v
 ```
 
 #### Run Role Playbooks (roles directory)
