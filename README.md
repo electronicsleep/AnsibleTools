@@ -2,8 +2,7 @@
 
 Bootstrap tools/examples for Ansible infrastructure DevOps automation.
 Shows some of the simple concepts and also includes some Python Boto3 examples.
-
-Ansible and Python can be used together to get more power and control.
+Ansible and Python can be used together for additional host logging and control.
 
 #### MacOS Install
 
@@ -27,7 +26,7 @@ pip3 install -r requirements.txt
 python3 src/boto/get_inventory.py > hosts.txt
 ```
 
-Update ansible.conf file if needed: `~/.ansible.cfg`
+Update ansible config file as needed: `~/.ansible.cfg`
 
 Example:
 ```
@@ -41,21 +40,28 @@ nocows=1
 #### Host inventory file
 
 Example using AnsiblePython:
+Shows host info at Runtime with name from Boto3 command
 
+Example
+```
+################################################################################
+Host Details: xx.xx.xx.xx # i-12345 NAME_UL running Host: 1
+IPAddress: xx.xx.xx.xx
+################################################################################
+```
+
+Command
 ```
 python3 src/ansiblePython.py -p check-w.yml -v
 python3 src/ansiblePython.py -p check-top.yml -v
 python3 src/ansiblePython.py -p check-disk.yml -v
 ```
 
-#### Run Role Playbooks (roles directory)
+#### Run Playbooks (roles directory)
 
 ```
-ansible-playbook -i hosts.txt check-os.yml -u ubuntu
-ansible-playbook -i hosts.txt check-lamp.yml -u ubuntu
-# ansible-playbook -i hosts.txt update-os.yml -u ubuntu
-# ansible-playbook -i hosts.txt build-base-os.yml -u ubuntu
-# ansible-playbook -i hosts.txt build-nagios-client.yml -u ubuntu
+ansible-playbook -i hosts.txt src/check-os.yml -u ubuntu
+ansible-playbook -i hosts.txt src/check-lamp.yml -u ubuntu
 ```
 
 #### Ansible Commands
@@ -82,14 +88,12 @@ ansible default -m setup -u ubuntu
 #### Best Practices
 
 Use --check
-
 Use --syntax-check
-
 Use --list-hosts
 
 #### Troubleshooting
 
-Make sure Python is installed on target hosts
+Ensure Python is installed on target hosts
 
 #### Resources
 
