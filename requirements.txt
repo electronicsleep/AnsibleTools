@@ -1,3 +1,5 @@
 requests
 termcolor
 boto3
+flake8
+ruff

@@ -6,7 +6,6 @@
 # Released under the BSD license
 
 import boto3
-import pprint
 client = boto3.client('ec2', 'us-west-1')
 response = client.describe_instances()
 print("[default]")
